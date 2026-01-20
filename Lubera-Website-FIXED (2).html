@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lubera – Clinical Digital Health Infrastructure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --accent-teal: #0891b2;
+            --accent-light: #06b6d4;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: rgba(8, 145, 178, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Abstract Dynamic Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(8, 145, 178, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(34, 197, 94, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation & Header */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(8, 145, 178, 0.08);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-tab {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-tab:hover {
+            color: var(--accent-teal);
+            background: rgba(8, 145, 178, 0.08);
+        }
+
+        .nav-tab.active {
+            color: var(--accent-teal);
+            border-bottom: 2px solid var(--accent-teal);
+        }
+
+        .founder-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid var(--accent-teal);
+            border-radius: 6px;
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .founder-link:hover {
+            background: var(--accent-teal);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 32px 60px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(248,250,252,0.8) 100%),
+                        radial-gradient(circle at 30% 40%, rgba(8, 145, 178, 0.08) 0%, transparent 60%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tagline {
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 32px;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 900px;
+        }
+
+        /* Problem Statement Section */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .problem-block {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            padding: 40px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-teal);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-teal);
+            box-shadow: 0 2px 8px rgba(8, 145, 178, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .problem-block:hover {
+            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .problem-block h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--accent-teal);
+        }
+
+        .problem-block p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .key-point {
+            background: linear-gradient(90deg, rgba(8, 145, 178, 0.08), transparent);
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 14px;
+            border-left: 3px solid var(--accent-teal);
+            box-shadow: inset 0 1px 2px rgba(8, 145, 178, 0.05);
+        }
+
+        /* Two-Column Section */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .column-text h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .column-text p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .column-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            padding: 20px;
+            display: block;
+            box-shadow: 0 8px 24px rgba(8, 145, 178, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(8, 145, 178, 0.05);
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-teal);
+            background: linear-gradient(135deg, var(--bg-secondary), rgba(6, 182, 212, 0.06));
+            box-shadow: 0 8px 24px rgba(8, 145, 178, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--accent-teal);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Emphasis Block */
+        .emphasis-block {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(6, 182, 212, 0.06) 100%);
+            padding: 48px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin: 48px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.08);
+        }
+
+        .emphasis-block p {
+            font-size: 20px;
+            color: var(--text-primary);
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        .emphasis-block strong {
+            color: var(--accent-teal);
+        }
+
+        /* Constraint Section */
+        .constraint-item {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .constraint-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .constraint-item h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+
+        .constraint-content p {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .reality-box {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            border-left: 3px solid var(--accent-teal);
+        }
+
+        /* Architecture Section */
+        .architecture-statement {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 48px;
+        }
+
+        .architecture-statement p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .architecture-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            padding: 20px;
+            margin-top: 32px;
+        }
+
+        /* Outcomes Grid */
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .outcome-block {
+            background: var(--bg-secondary);
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .outcome-block h3 {
+            color: var(--accent-teal);
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .outcome-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .outcome-block li {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .outcome-block li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-teal);
+        }
+
+        /* Proof of Concept */
+        .poc-container {
+            background: var(--bg-secondary);
+            padding: 48px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 48px;
+        }
+
+        .poc-image {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            padding: 20px;
+            margin-top: 32px;
+            box-shadow: 0 8px 24px rgba(8, 145, 178, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Market Section */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .market-card {
+            background: var(--bg-secondary);
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .market-card h3 {
+            color: var(--accent-teal);
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .market-number {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+        }
+
+        .market-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Roadmap Section */
+        .roadmap-item {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-teal);
+        }
+
+        .roadmap-item h3 {
+            color: var(--accent-teal);
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .roadmap-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Competitive Landscape Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 32px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table thead {
+            background: rgba(50, 184, 198, 0.1);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            padding: 16px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-teal);
+        }
+
+        .comparison-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(8, 145, 178, 0.08);
+        }
+
+        /* Abstract Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color) 50%, transparent);
+            margin: 60px 0;
+        }
+
+        /* Minimal Icon / Abstract Element */
+        .abstract-element {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border: 1px solid var(--border-color);
+            margin: 32px 0;
+        }
+
+        .abstract-element::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(8, 145, 178, 0.15) 0%, transparent 70%);
+            top: -50px;
+            right: -50px;
+            border-radius: 50%;
+        }
+
+        .abstract-element::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            bottom: -30px;
+            left: -30px;
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 48px 32px;
+            margin-top: 80px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-contact {
+            text-align: right;
+        }
+
+        .footer-contact a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-teal);
+            text-decoration: none;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .footer-contact a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tagline {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .problem-grid,
+            .two-column,
+            .feature-grid,
+            .outcomes-grid,
+            .market-grid,
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .footer-contact {
+                text-align: left;
+            }
+
+            section {
+                padding: 48px 20px;
+            }
+
+            .header-container {
+                padding: 0 20px;
+            }
+        }
+    
+        /* MOBILE RESPONSIVE - 768px and below */
+        @media (max-width: 768px) {
+            /* Hide desktop navbar items */
+            .nav-tabs {
+                display: none !important;
+            }
+
+            /* Show hamburger button on mobile */
+            .hamburger {
+                display: flex !important;
+            }
+
+            /* Hide founder link on mobile */
+            .founder-link {
+                display: none !important;
+            }
+
+            /* Header container adjusts on mobile */
+            .header-container {
+                padding: 0 16px !important;
+            }
+        }
+
+        /* Hamburger button - HIDDEN on desktop, shown on mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 6px 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--text-primary);
+            display: block;
+            border-radius: 1px;
+        }
+
+        .hamburger:hover span {
+            background-color: var(--accent-teal);
+        }
+
+        /* Mobile menu - HIDDEN by default */
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            flex-direction: column;
+            width: 100%;
+            z-index: 99;
+        }
+
+        /* SHOW menu when .active class is present */
+        .nav-menu.active {
+            display: flex;
+        }
+
+        /* Mobile menu nav links */
+        .nav-menu .nav-tab {
+            padding: 12px 16px;
+            border-radius: 0;
+            margin: 0;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-menu .nav-tab:last-child {
+            border-bottom: none;
+        }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <img src="https://github.com/NishantIyer2609/web-sdk-ui-wrapper-old/raw/main/1705138997182.jpg" alt="Lubera Logo" class="logo">
+            <div class="nav-tabs">
+                <a class="nav-tab active" href="#" data-section="problem">Problem</a>
+                <a class="nav-tab" href="#" data-section="market">Market</a>
+                <a class="nav-tab" href="#" data-section="solution">Solution</a>
+                <a class="nav-tab" href="#" data-section="doctor">Experience</a>
+                <a class="nav-tab" href="#" data-section="business">Business</a>
+            </div>
+            <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="https://www.linkedin.com/in/n1sh/" class="founder-link">
+                Founder →
+            </a>
+        </div>
+    
+            <div class="nav-menu" id="nav-menu">
+                <a class="nav-tab active" href="#" data-section="problem">Problem</a>
+                <a class="nav-tab" href="#" data-section="market">Market</a>
+                <a class="nav-tab" href="#" data-section="solution">Solution</a>
+                <a class="nav-tab" href="#" data-section="doctor">Experience</a>
+                <a class="nav-tab" href="#" data-section="business">Business</a>
+            </div>
+        </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="tagline">Lubera: The only ultra low-cost ABDM-Certified Clinical Ambulatory Care Terminal in India</h1>
+            <p class="subtitle">Purpose-built for resource-constrained environments and doctor workflows. Engineered to make clinic digitization finally viable.</p>
+        </div>
+    </section>
+
+    <!-- Problem: Undigitized Clinics -->
+    <section data-section="problem">
+        <div class="section-container">
+            <h2 class="section-title">The Problem: Digitization Has Stalled</h2>
+            <p class="section-subtitle">India's primary care remains largely undigitized. Not because digitization is undesirable, but because systems don't fit the reality of small clinics.</p>
+
+            <div class="problem-grid">
+                <div class="problem-block">
+                    <h3>Primary Care Clinics Remain Largely Undigitized</h3>
+                    <p>Independent ambulatory care clinics constitute the majority of frontline health delivery in India, yet only a small fraction have adopted electronic medical records (EMRs).</p>
+                    <p>Although clinic-level digitization is widely discussed, it has not translated into meaningful use on the ground.</p>
+                    <div class="key-point"><strong>~20%</strong> of primary care and small ambulatory clinics use EMR systems in studied settings.</div>
+                </div>
+
+                <div class="problem-block">
+                    <h3>Scale of Unmet Demand</h3>
+                    <p><strong>India has 100,000+ independent clinics</strong> delivering the majority of ambulatory care.</p>
+                    <p>Corporate hospitals and larger chains are largely digitized with EMRs and clinical systems. Small clinics predominantly rely on paper registers and manual recordkeeping.</p>
+                    <p style="margin-top: 20px; color: #94a3b8; font-size: 14px; font-style: italic;">This is not merely a technology availability gap—it reflects fundamental constraints in cost, infrastructure, workflows, and support.</p>
+                </div>
+            </div>
+
+            <div class="emphasis-block" style="margin-top: 48px;">
+                <p><strong>Why Digitization Fails in Small Clinics</strong></p>
+                <p style="font-size: 16px; margin-top: 16px; font-weight: normal;">Economics don't work (₹20,000+ hardware + ₹1,000–₹5,000/month subscriptions for 15–25 patients/day). Setup requires IT support, configuration, and training. Failures due to bugs or system errors disrupt operational hours. For small clinics, paper workflows remain cheaper, predictable, and low-risk.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Opportunity: ABDM Wave -->
+    <section data-section="market">
+        <div class="section-container">
+            <h2 class="section-title">Why Now? The ABDM Mandate</h2>
+
+            <div class="two-column">
+                <div class="column-text">
+                    <h3>India's Healthcare System Is Entering the 2026 ABDM Wave</h3>
+                    <p>The Ayushman Bharat Digital Mission (ABDM) is a ₹1,600+ crore national program to create a unified digital health ecosystem used by every doctor and patient.</p>
+                    <p><strong>Core Requirements:</strong></p>
+                    <div style="margin: 16px 0;">
+                        <div class="key-point">Every citizen receives a unique ABHA ID—like an Aadhaar for health</div>
+                        <div class="key-point">Medical records are expected to be digitally created, shared, and linked to ABHA ID</div>
+                        <div class="key-point">Clinics, hospitals, labs, and pharmacies integrate into ABDM network via EMR providers</div>
+                    </div>
+                    <p style="margin-top: 24px; color: var(--text-secondary);"><strong>The Regulatory Pressure:</strong> With ABDM–PMJAY mandates, digitization is no longer optional. Empanelled clinics under PMJAY now have limited time to procure hardware, adopt compliant software, and transition away from paper.</p>
+                </div>
+
+                <div class="column-image">
+                    <svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; max-width: 100%; border-radius: 12px;">
+                        <defs>
+                            <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#0891b2;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <rect width="400" height="350" fill="#f8fafc"/>
+                        
+                        <!-- Government Enforcement Arrow (Left) -->
+                        <g>
+                            <line x1="80" y1="100" x2="190" y2="185" stroke="url(#tealGrad)" stroke-width="3" stroke-linecap="round"/>
+                            <polygon points="190,185 180,180 185,190" fill="#0891b2"/>
+                            <circle cx="50" cy="70" r="22" fill="#0891b2" opacity="0.15"/>
+                            <circle cx="50" cy="70" r="10" fill="none" stroke="#0891b2" stroke-width="2"/>
+                            <line x1="50" y1="60" x2="50" y2="80" stroke="#0891b2" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Judicial Pressure Arrow (Right) -->
+                        <g>
+                            <line x1="320" y1="100" x2="210" y2="185" stroke="url(#tealGrad)" stroke-width="3" stroke-linecap="round"/>
+                            <polygon points="210,185 220,180 215,190" fill="#06b6d4"/>
+                            <circle cx="350" cy="70" r="22" fill="#06b6d4" opacity="0.15"/>
+                            <rect x="343" y="60" width="14" height="8" fill="#06b6d4" rx="1"/>
+                            <line x1="350" y1="68" x2="350" y2="85" stroke="#06b6d4" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Patient Demand Arrow (Bottom) -->
+                        <g>
+                            <line x1="200" y1="280" x2="200" y2="200" stroke="url(#tealGrad)" stroke-width="3" stroke-linecap="round"/>
+                            <polygon points="200,200 195,210 205,210" fill="#0891b2"/>
+                            <circle cx="200" cy="310" r="22" fill="#0891b2" opacity="0.15"/>
+                            <circle cx="200" cy="305" r="5" fill="#0891b2"/>
+                            <path d="M 200 312 L 200 322 M 195 316 L 205 316" stroke="#0891b2" stroke-width="2" stroke-linecap="round"/>
+                        </g>
+                        
+                        <!-- Central Convergence Point -->
+                        <circle cx="200" cy="190" r="18" fill="#0891b2" opacity="0.2"/>
+                        <circle cx="200" cy="190" r="10" fill="#0891b2"/>
+                        
+                        <!-- Labels -->
+                        <text x="50" y="35" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle" font-family="Arial, sans-serif">Government</text>
+                        <text x="50" y="52" font-size="12" fill="#475569" text-anchor="middle" font-family="Arial, sans-serif">Enforcement</text>
+                        
+                        <text x="350" y="35" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle" font-family="Arial, sans-serif">Judicial</text>
+                        <text x="350" y="52" font-size="12" fill="#475569" text-anchor="middle" font-family="Arial, sans-serif">Pressure</text>
+                        
+                        <text x="200" y="335" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle" font-family="Arial, sans-serif">Patient</text>
+                        <text x="200" y="350" font-size="12" fill="#475569" text-anchor="middle" font-family="Arial, sans-serif">Demand</text>
+                        
+                        <!-- Center label -->
+                        <text x="200" y="193" font-size="12" font-weight="600" fill="white" text-anchor="middle" font-family="Arial, sans-serif">Market</text>
+                        <text x="200" y="208" font-size="10" fill="white" text-anchor="middle" font-family="Arial, sans-serif">Opportunity</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="emphasis-block">
+                <p><strong>Mandates Are Here. Clinics Are Not Ready.</strong></p>
+                <p style="font-size: 16px; margin-top: 16px; font-weight: normal;">Policy accelerates, yet a large portion of clinics remain unprepared. They must rapidly set up hardware, configure ABDM-compliant software, and change long-standing workflows—often without technical support. This creates sharp convergence: regulatory enforcement, judicial pressure, and customer expectation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution: Lubera Overview -->
+    <section data-section="solution">
+        <div class="section-container">
+            <h2 class="section-title">Our Solution: Built Backwards from Clinic Constraints</h2>
+            <p class="section-subtitle">Lubera is not a clinic-grade feature reduction of hospital software. It is a new category of clinical infrastructure engineered from India's realities upward.</p>
+
+            <div class="two-column">
+                <div class="column-text">
+                    <h3>A Different Approach</h3>
+                    <p>Two years ago, we started with a simple realization: India's clinics don't need scaled-down hospital software. They need systems built from their constraints upward.</p>
+                    <p>Instead of starting from features, we asked one question: <strong>What are the non-negotiable realities of Indian clinics?</strong></p>
+                    <p style="margin-top: 24px; color: var(--text-muted); font-size: 14px;">From that question came architecture fundamentally different from every EMR in India.</p>
+                </div>
+
+                <div class="column-image">
+                    <img src="https://github.com/NishantIyer2609/web-sdk-ui-wrapper-old/raw/main/93170ee2-b252-4986-a490-a0ee09acde44.png" alt="Lubera Purpose-Built Clinical Terminal">
+                    <p style="margin-top: 12px; color: var(--text-muted); font-size: 13px; text-align: center;">Purpose-built medical computer—not a repurposed PC</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Constraints -->
+    <section>
+        <div class="section-container">
+            <h2 class="section-title">The Three Constraints That Shaped Lubera</h2>
+
+            <div style="margin-top: 48px;">
+                <div class="constraint-item">
+                    <h3>1. Hardware & Cost Reality</h3>
+                    <div class="constraint-content">
+                        <p>How low can hardware cost and power consumption go while delivering full EMR, e-prescription, ABDM, and practice management—with equal or better performance, reliability, and UI/UX than urban clinics?</p>
+                        <div class="reality-box">
+                            <p style="margin-bottom: 10px;"><strong>Target Reality:</strong></p>
+                            <ul style="list-style: none; padding-left: 0;">
+                                <li style="color: var(--text-secondary); margin-bottom: 8px;">• Doctors readily buy hardware under ₹10,000</li>
+                                <li style="color: var(--text-secondary); margin-bottom: 8px;">• Comfortable with ₹1,000/month subscriptions</li>
+                                <li style="color: var(--text-secondary);">• Same spend as current competing EMR solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="constraint-item">
+                    <h3>2. Network Reality</h3>
+                    <div class="constraint-content">
+                        <p>How little bandwidth can the system survive on while still syncing with ABDM infrastructure, cloud records, and workflows?</p>
+                        <div class="reality-box">
+                            <p style="margin-bottom: 10px;"><strong>Ground Truth:</strong></p>
+                            <ul style="list-style: none; padding-left: 0;">
+                                <li style="color: var(--text-secondary); margin-bottom: 8px;">• Many clinics operate at ~100 kbps</li>
+                                <li style="color: var(--text-secondary);">• Most ABDM-compatible EMRs stall or fail at these speeds</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="constraint-item">
+                    <h3>3. Zero Learning Curve & Zero Failure</h3>
+                    <div class="constraint-content">
+                        <p>Can a doctor start using the system without training, face no configuration or installers, encounter no bugs, and have minimal error paths and malware exposure?</p>
+                        <div class="reality-box">
+                            <p style="margin-bottom: 10px;"><strong>Current State:</strong></p>
+                            <p style="color: var(--text-secondary);">No specialized clinical desktop achieves this today.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture -->
+    <section>
+        <div class="section-container">
+            <h2 class="section-title">Lubera's Architecture: What Makes This Possible</h2>
+
+            <div class="architecture-statement">
+                <p><strong>Lubera is built on a novel frame-buffer Linux architecture using first-in-industry system design practices.</strong></p>
+                <p>It belongs to the class of thin-client computing, but is fundamentally different from mainstream implementations.</p>
+                <p>This architecture allows full-fledged, NHA-compliant medical and tooling software to run on ultra-low-resource hardware—previously considered impossible.</p>
+                <img src="https://github.com/NishantIyer2609/esgsrg/raw/main/architectural-development-timeline.png" alt="Architectural Development Timeline" class="architecture-image">
+            </div>
+
+            <div class="emphasis-block">
+                <p><strong>Lubera is not cheaper software. It is a new class of clinical infrastructure built for India.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outcomes -->
+    <section>
+        <div class="section-container">
+            <h2 class="section-title">What This Architecture Unlocks</h2>
+            <p class="section-subtitle">Outcomes clinics actually care about.</p>
+
+            <div class="outcomes-grid">
+                <div class="outcome-block">
+                    <h3>Unmatched Affordability</h3>
+                    <ul>
+                        <li>₹6,000 BOM medical workstation</li>
+                        <li>~50% cheaper than lowest viable alternatives</li>
+                        <li>₹1,000/month simple software subscription</li>
+                    </ul>
+                </div>
+
+                <div class="outcome-block">
+                    <h3>Zero-Friction Deployment</h3>
+                    <ul>
+                        <li>Courier-delivered box</li>
+                        <li>Plug into power + existing monitor & input device</li>
+                        <li>First e-prescription in under 2 minutes</li>
+                    </ul>
+                </div>
+
+                <div class="outcome-block">
+                    <h3>Built for India's Internet</h3>
+                    <ul>
+                        <li>Stable operation at 20 kbps</li>
+                        <li>Works on 2G / 3G / hotspots / mesh networks</li>
+                        <li>Competing EMRs fail under congestion</li>
+                    </ul>
+                </div>
+
+                <div class="outcome-block">
+                    <h3>Security & Compliance</h3>
+                    <ul>
+                        <li>Zero patient data stored on device</li>
+                        <li>Enterprise-grade cloud backend</li>
+                        <li>ABDM, HIPAA, HISAR, NPDPA compliant</li>
+                    </ul>
+                </div>
+
+                <div class="outcome-block">
+                    <h3>Industrial Reliability</h3>
+                    <ul>
+                        <li>Prototype V3 stress-tested for 60+ patients/day</li>
+                        <li>Temperature extremes and network instability</li>
+                        <li>Proven durability in constrained OPD settings</li>
+                    </ul>
+                </div>
+
+                <div class="outcome-block">
+                    <h3>Clinical Operating System</h3>
+                    <ul>
+                        <li>Full EMR + ABDM integration</li>
+                        <li>Practice management and e-prescriptions</li>
+                        <li>Public health reporting and decision support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctor Experience -->
+    <section data-section="doctor">
+        <div class="section-container">
+            <h2 class="section-title">The Doctor Experience</h2>
+
+            <div style="margin-top: 48px;">
+                <h3 style="font-size: 22px; margin-bottom: 24px; color: var(--text-primary);">Instant Patient Onboarding via ABDM</h3>
+                <div class="two-column" style="margin-bottom: 48px;">
+                    <div class="column-text">
+                        <p>Patient arrives. Patient scans the clinic's ABHA QR code (printed card or phone) and gets redirected to ABDM App. After consent to share records, Lubera instantly pulls complete medical history from the national grid—past diagnoses, medications, allergies, lab results, prescriptions from other cities.</p>
+                        <p style="margin-top: 16px; color: var(--text-muted); font-size: 14px;">The fragmented file system becomes a unified timeline.</p>
+                    </div>
+                    <div class="column-image">
+                        <img src="https://github.com/NishantIyer2609/esgsrg/raw/main/scan-hf-abha2.png" alt="ABHA QR Scan Interface">
+                    </div>
+                </div>
+
+                <h3 style="font-size: 22px; margin-bottom: 24px; color: var(--text-primary); margin-top: 48px;">The 3-Click Prescription</h3>
+                <div class="two-column">
+                    <div class="column-image">
+                        <img src="https://github.com/NishantIyer2609/esgsrg/raw/main/Screenshot-2025-12-16-193424.png" alt="Prescription Interface">
+                    </div>
+                    <div class="column-text">
+                        <p>Interface obsessively optimized for speed. Common diagnoses and medications intelligently mapped by specialty.</p>
+                        <p><strong>Standard prescription workflow:</strong> Select diagnosis → Pick medications → Generate.</p>
+                        <p style="margin-top: 16px;">Total time: under 30 seconds. The system watches quietly in the background, flagging drug interactions and dosage risks before prescription finalizes. One click sends digitally signed e-prescription to patient's WhatsApp or prints wirelessly.</p>
+                    </div>
+                </div>
+
+                <img src="https://github.com/NishantIyer2609/esgsrg/raw/main/1760602441107.png" alt="Full Prescription Generation Interface" style="width: 100%; max-height: 500px; object-fit: cover; border-radius: 12px; background: var(--bg-secondary); padding: 20px; margin-top: 48px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof of Concept -->
+    <section>
+        <div class="section-container">
+            <h2 class="section-title">Proof of Concept: Working Reality</h2>
+
+            <div class="poc-container">
+                <h3 style="color: var(--accent-teal); margin-bottom: 16px;">All Features Running on Ultra-Low-Resource Hardware</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 12px;">Full clinical workflows are achievable on IoT single-board computers. Specifically:</p>
+
+                <div style="margin: 24px 0;">
+                    <div class="key-point"><strong>Hardware:</strong> Below ₹1,000, 50MB RAM, 32-bit ARM processor, 2GB SD Card, 2G network speed</div>
+                    <div class="key-point"><strong>Functionality:</strong> Full clinical workflows without laptops or desktops</div>
+                    <div class="key-point"><strong>Performance:</strong> Stress-tested for 60+ patients/day under temperature extremes and network instability</div>
+                    <div class="key-point"><strong>Architecture:</strong> Novel thin-client design (1 patent filed) preserves performance under constrained CPU, memory, and network</div>
+                </div>
+
+                <p style="color: var(--text-secondary); margin-top: 24px; font-style: italic;">The system is viable for real OPD usage, not just demonstrations.</p>
+
+                <img src="https://github.com/NishantIyer2609/esgsrg/raw/main/1760601380251.png" alt="Proof of Concept Running on Low-Resource Hardware" class="poc-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Opportunity -->
+    <section>
+        <div class="section-container">
+            <h2 class="section-title">Market Opportunity & Target Segment</h2>
+
+            <div class="market-grid">
+                <div class="market-card">
+                    <h3>Total Addressable Market (TAM)</h3>
+                    <div class="market-number">~100,000</div>
+                    <p>Independent clinics across India</p>
+                </div>
+
+                <div class="market-card">
+                    <h3>Serviceable Obtainable Market (SAM)</h3>
+                    <div class="market-number">~50,000</div>
+                    <p>High-volume clinics in Tier-2 and Tier-3 cities, 40+ patients/day</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px;">
+                <h3 style="font-size: 20px; margin-bottom: 16px; color: var(--text-primary);">Initial Focus Market</h3>
+                <div class="key-point"><strong>150 clinics</strong> in Hyderabad metro periphery and high-ABDM-awareness Tier-2 hubs</div>
+                <div style="margin-top: 16px; background: var(--bg-secondary); padding: 24px; border-radius: 8px;">
+                    <p style="color: var(--text-secondary); font-size: 14px;"><strong>This market is:</strong></p>
+                    <ul style="list-style: none; padding-left: 0; margin-top: 12px;">
+                        <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Regulation-driven (ABDM mandates)</li>
+                        <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Price-sensitive</li>
+                        <li style="color: var(--text-secondary);">✓ Actively seeking viable digitization options</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section>
+        <div class="section-container">
+            <h2 class="section-title">Current Status & Forward Roadmap</h2>
+
+            <div class="roadmap-item">
+                <h3>Current Progress</h3>
+                <p>Built a fully functional prototype integrated with ABDM-compliant backend requiring no further regulatory approval and fast-tracked GTM.</p>
+                <p style="margin-top: 12px;"><strong>Validated:</strong> Full EMR + ABDM workflows on hardware previously considered infeasible. Ultra-low-resource constraints don't require feature compromises. Architecture validated through sustained testing.</p>
+            </div>
+
+            <div class="roadmap-item">
+                <h3>Next Phase: Clinical Validation</h3>
+                <p>Deploy pilots in real clinics. Validate against real OPD workflows. Measure speed, reliability, and doctor acceptance.</p>
+            </div>
+
+            <div class="roadmap-item">
+                <h3>Team & Execution</h3>
+                <p>Onboard co-founders and core team. Strengthen B2B distribution, product engineering, and field deployment & support infrastructure.</p>
+            </div>
+
+            <div class="roadmap-item">
+                <h3>Ongoing Research & Partnerships</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Scientific study of EMR impact on Indian clinical workflows</li>
+                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ AI-powered medical scribing in native Indic languages</li>
+                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Ergonomic optimization to reduce OPD friction</li>
+                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Membrane-based GPIO keypads for clinical hotkeys</li>
+                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Network-usage optimization for unreliable connectivity</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model -->
+    <section data-section="business">
+        <div class="section-container">
+            <h2 class="section-title">Business Model & Unit Economics</h2>
+
+            <div class="tabs-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-group="business" data-tab="hardware">Hardware & Service</button>
+                    <button class="tab-button" data-group="business" data-tab="subscription">Subscription Model</button>
+                    <button class="tab-button" data-group="business" data-tab="competitive">Competitive Edge</button>
+                </div>
+
+                <div class="tab-content active" data-group="business" data-tab="hardware">
+                    <div style="margin-top: 32px;">
+                        <h3 style="font-size: 22px; margin-bottom: 24px; color: var(--text-primary);">Hardware-as-a-Service</h3>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h3>Hardware Economics</h3>
+                                <p><strong>Bill of Materials:</strong> ₹6,000</p>
+                                <p style="margin-top: 12px; color: var(--text-muted); font-size: 14px;">Covers delivery, support, warranty, and margin</p>
+                                <p style="margin-top: 12px; font-weight: 600;">Retail price: ~₹9,000</p>
+                                <p style="margin-top: 12px; color: var(--text-secondary); font-size: 14px;">Off-the-shelf SBC-based, QA-tested, ready for bulk procurement. Includes compute box, monitor & peripherals, proprietary OS, clinical software, and first-year warranty.</p>
+                            </div>
+
+                            <div class="feature-card">
+                                <h3>Deployment Package</h3>
+                                <p><strong>Everything Included:</strong></p>
+                                <ul style="list-style: none; padding-left: 0; margin-top: 12px;">
+                                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Purpose-built compute hardware</li>
+                                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Monitor & input peripherals</li>
+                                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ Proprietary OS + clinical software</li>
+                                    <li style="color: var(--text-secondary); margin-bottom: 8px;">✓ First-year warranty</li>
+                                    <li style="color: var(--text-secondary);">✓ Courier delivery + setup</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" data-group="business" data-tab="subscription">
+                    <div style="margin-top: 32px;">
+                        <h3 style="font-size: 22px; margin-bottom: 24px; color: var(--text-primary);">Usage-Based Subscription</h3>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h3>Monthly Subscription</h3>
+                                <p><strong>Cost:</strong> ~₹1,200/month</p>
+                                <p style="margin-top: 12px; color: var(--text-muted); font-size: 14px;">For integrated clinic usage (≤50 visits/day)</p>
+                                <p style="margin-top: 12px; color: var(--text-secondary); font-size: 14px;"><strong>What's Included:</strong> Software, cloud backend, updates, ABDM integration, support, and compliance tools.</p>
+                            </div>
+
+                            <div class="feature-card">
+                                <h3>Value Proposition</h3>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Total monthly spend (hardware amortized + software): ₹1,200–₹1,500</p>
+                                <p style="margin-top: 12px; font-size: 13px; color: var(--text-muted); font-style: italic;">Perception: Comparable cost to two stethoscopes, yet delivers complete digital practice with national health infrastructure connectivity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" data-group="business" data-tab="competitive">
+                    <div style="margin-top: 32px;">
+                        <h3 style="font-size: 22px; margin-bottom: 24px; color: var(--text-primary);">Competitive Economics</h3>
+
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Solution</th>
+                                    <th>Hardware Req.</th>
+                                    <th>Upfront Cost</th>
+                                    <th>Lubera Advantage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Practo / HealthPlix</strong></td>
+                                    <td>Generic laptop</td>
+                                    <td>₹16k–₹20k</td>
+                                    <td>Lubera: ₹9k, appliance-grade, ABDM-optimized</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bahmni (Open Source)</strong></td>
+                                    <td>Generic laptop</td>
+                                    <td>₹30k+ (setup+config)</td>
+                                    <td>Lubera: Closed, reliable, 2-min deployment</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cloud-only EMR</strong></td>
+                                    <td>Strong internet</td>
+                                    <td>₹3k+/month (recurring)</td>
+                                    <td>Lubera: Offline-capable, works at 20kbps</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px;">
+                <h3 style="font-size: 22px; margin-bottom: 24px; color: var(--text-primary);">Hardware-as-a-Service + Usage-Based Subscription</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Hardware Economics</h3>
+                        <p><strong>Bill of Materials:</strong> ₹6,000</p>
+                        <p style="margin-top: 12px; color: var(--text-muted); font-size: 14px;">Covers delivery, support, warranty, and margin</p>
+                        <p style="margin-top: 12px; font-weight: 600;">Retail price: ~₹9,000</p>
+                        <p style="margin-top: 12px; color: var(--text-secondary); font-size: 14px;">Off-the-shelf SBC-based, QA-tested, ready for bulk procurement. Includes compute box, monitor & peripherals, proprietary OS, clinical software, and first-year warranty.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Usage-Based Subscription</h3>
+                        <p><strong>Monthly Cost:</strong> ~₹1,200</p>
+                        <p style="margin-top: 12px; color: var(--text-muted); font-size: 14px;">For integrated clinic usage (≤50 visits/day)</p>
+                        <p style="margin-top: 12px; color: var(--text-secondary); font-size: 14px;"><strong>Includes:</strong> Software, cloud backend, updates, ABDM integration, support, and compliance tools.</p>
+                        <p style="margin-top: 16px; font-size: 13px; color: var(--text-teal);">Perception: Comparable cost to two stethoscopes, yet delivers complete digital practice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitive Landscape -->
+    <section>
+        <div class="section-container">
+            <h2 class="section-title">Competitive Landscape</h2>
+            <p class="section-subtitle">Lubera creates a new category, rather than competing head-on with traditional EMRs.</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Solution</th>
+                        <th>Hardware Requirement</th>
+                        <th>Upfront Cost</th>
+                        <th>Key Difference</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Practo / HealthPlix / Eka Care</strong></td>
+                        <td>Generic laptop</td>
+                        <td>₹16k–₹20k</td>
+                        <td>Generic hardware; requires IT setup</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bahmni</strong></td>
+                        <td>Generic laptop</td>
+                        <td>₹30k+</td>
+                        <td>Hospital-grade; overkill for small clinics</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lubera</strong></td>
+                        <td>Purpose-built clinical terminal</td>
+                        <td>₹9k</td>
+                        <td>Closed, reliable, appliance-like system with full clinical functionality</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+        <section style="margin-top: -20px; padding-top: 40px;">
+        <div class="section-container">
+            <h3 style="font-size: 22px; margin-bottom: 32px; color: var(--text-primary);">Lubera's Differentiation</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>No Generic Computers</h3>
+                    <p>Purpose-built clinical hardware eliminates IT setup and maintenance burden</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Closed, Reliable System</h3>
+                    <p>Appliance-like operation with minimal configuration, no installers, no malware exposure</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Same Clinical Functionality</h3>
+                    <p>Delivers full EMR, ABDM, and practice management as leading urban EMRs</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>First-Mover Advantage</h3>
+                    <p>No direct equivalent in market. Blue-ocean opportunity driven by regulation and unmet demand</p>
+                </div>
+            </div>
+        </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-text">
+                <p><strong>Lubera</strong></p>
+                <p>Clinical Digital Health Infrastructure for India</p>
+                <p style="margin-top: 24px; font-size: 13px; color: var(--text-muted);">Engineered for resources-constrained environments, regulation-driven adoption, and doctor-centric workflows. ABDM-certified, HIPAA/HISAR/NPDPA compliant.</p>
+            </div>
+
+            <div class="footer-contact">
+                <a href="https://www.linkedin.com/in/n1sh/">
+                    Founder →
+                </a>
+                <p style="color: var(--text-muted); font-size: 13px; margin-top: 20px;">Hyderabad, India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation & Tab System
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const tabButtons = document.querySelectorAll('.tab-button');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-section');
+                const targetSection = document.querySelector(`section[data-section="${sectionId}"]`);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Update active tab
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabGroup = this.getAttribute('data-group');
+                const tabName = this.getAttribute('data-tab');
+                
+                // Deactivate all in group
+                document.querySelectorAll(`[data-group="${tabGroup}"]`).forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll(`.tab-content[data-group="${tabGroup}"]`).forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Activate selected
+                this.classList.add('active');
+                document.querySelector(`.tab-content[data-group="${tabGroup}"][data-tab="${tabName}"]`).classList.add('active');
+            });
+        });
+
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section[data-section]');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('data-section');
+                }
+            });
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-section') === current) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+
+        // Smooth scroll for founder link
+        document.querySelector('.founder-link')?.addEventListener('click', function(e) {
+            if (this.href.includes('#')) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+
+    <script>
+        // Get references to elements
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-menu .nav-tab');
+
+        // Toggle menu when hamburger is clicked
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            console.log('Hamburger clicked. Menu active:', navMenu.classList.contains('active'));
+        });
+
+        // Close menu when a link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                navMenu.classList.remove('active');
+                console.log('Link clicked. Menu closed.');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!navMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
